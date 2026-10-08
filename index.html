@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf8f4">
+  <title>CheckDistill — Adaptive Checklist Distillation</title>
+  <meta name="description" content="CheckDistill from Alibaba Group: instance-specific verification meets efficient distributional reward modeling for image editing. Explore the paper, method, benchmarks, and qualitative results.">
+  <meta property="og:title" content="CheckDistill — Better rewards, distilled.">
+  <meta property="og:description" content="Adaptive Checklist Distillation for Efficient Distributional Reward Modeling in Image Editing. A technical report from Alibaba Group.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://faltingsa.github.io/CheckDistill.github.io/">
+  <meta property="og:image" content="https://faltingsa.github.io/CheckDistill.github.io/assets/qualitative.webp">
+  <link rel="canonical" href="https://faltingsa.github.io/CheckDistill.github.io/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <script src="site-config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a href="#" class="wordmark" aria-label="CheckDistill home"><span class="brand-check" aria-hidden="true">✓</span>CheckDistill<span class="brand-dot">.</span></a>
+      <nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#examples">Examples</a></nav>
+      <a class="nav-paper" href="assets/CheckDistill-Technical-Report.pdf" target="_blank" rel="noopener">Read paper <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-kicker"><span>ALIBABA GROUP</span><span class="kicker-line"></span><span>TECHNICAL REPORT · 2026</span></div>
+      <h1 id="hero-title">Check<span>Distill</span><span class="title-period">.</span></h1>
+      <p class="paper-title">Adaptive Checklist Distillation for Efficient<br class="desktop-break"> Distributional Reward Modeling in Image Editing</p>
+      <div class="authors" aria-label="Authors"><span>Yaqi Cai<sup>*</sup></span><span>Zuan Gao<sup>†</sup></span><span>Mengting Chen<sup aria-label="corresponding author">✉</sup></span><span>Wei Li</span><span>Bo Zheng</span></div>
+      <p class="affiliation">Alibaba Group</p>
+      <div class="hero-actions">
+        <a class="button button-dark" href="assets/CheckDistill-Technical-Report.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7zM14 3v5h4M10 12h5M10 16h5"/></svg>Read the paper <span>↗</span></a>
+        <button class="button button-soon" type="button" disabled><img src="assets/github.svg" alt="" width="18" height="18">Code <span class="soon-label">Coming soon</span></button>
+        <a class="button button-text" href="#citation">Cite this work <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="author-notes"><span>* Work done during an internship at Alibaba.</span><span>† Project Lead.</span><span>✉ Corresponding author.</span></p>
+      <div class="insight"><span class="eyebrow">THE KEY INSIGHT</span><p>Scaling instance-specific dynamic checklists defines the frontier of reward quality; <em>compressing reasoning enables deployment at scale.</em></p></div>
+    </section>
+
+    <div class="stat-band"><div class="section-shell stats">
+      <div><span class="stat-label">MMRB2</span><strong>72.30<span>%</span></strong><span class="stat-description">Aggregate accuracy</span></div>
+      <div><span class="stat-label">MER-BENCH</span><strong>56.67<span>%</span></strong><span class="stat-description">Aggregate accuracy</span></div>
+      <div><span class="stat-label">EDITREWARD-BENCH</span><strong>82.90<span>%</span></strong><span class="stat-description">Aggregate accuracy</span></div>
+      <div class="efficiency-stat"><span class="stat-label">DIRECT SCORING</span><strong>~10<span> tokens</span></strong><span class="stat-description">No reasoning at inference</span></div>
+    </div><p class="stat-note">CheckDistill on Qwen3.5-9B · Reported evaluation settings</p></div>
+
+    <section id="overview" class="section-shell section-space">
+      <div class="section-heading"><span class="eyebrow">01 / OVERVIEW</span><h2>Verify in detail.<br><em>Score with efficiency.</em></h2></div>
+      <div class="intro-columns"><p class="lead">A good edit changes what you ask for—and preserves what you don’t. CheckDistill turns these instance-specific requirements into atomic checks, then distills their evidence into a compact reward model.</p><p>During training, a privileged teacher sees checklists, item-level judgments, and rationales. At deployment, the student predicts four score distributions directly from the instruction and image pair, providing efficient feedback for online reinforcement learning.</p></div>
+      <figure class="paper-figure"><button class="figure-button" data-lightbox="assets/overview.webp" data-caption="Figure 1. CheckDistill compared with regression-based and reasoning-based reward models." aria-label="Enlarge reward modeling overview"><img src="assets/overview.webp" alt="Three reward model paradigms: scalar regression, explicit reasoning, and CheckDistill’s checklist-guided training followed by direct scoring." width="2400" height="959" loading="lazy"><span class="expand-label">View full figure ↗</span></button><figcaption><span>FIGURE 01</span>From detailed verification evidence to efficient direct reward scoring.</figcaption></figure>
+      <details class="abstract-disclosure"><summary>Read the full abstract <span aria-hidden="true">+</span></summary><div class="abstract-body" id="abstract-text">Reinforcement learning for instruction-guided image editing requires reward models that provide reliable, accurate, and efficient feedback. Direct scalar prediction compresses multidimensional editing preferences, whereas generative evaluators can expose their judgment through explicit reasoning. However, broad scoring criteria do not specify all instance-dependent editing and preservation constraints, and generating long reasoning trajectories is costly for online optimization. We introduce CheckDistill, a pointwise reward modeling framework that internalizes instruction-adaptive checklists. We decompose each editing condition into atomic, independently verifiable requirements and construct four-dimensional scoring labels together with structured verification evidence. After supervised score initialization, a privileged teacher conditions on checklists, item-level judgments, and dimension-level rationales to supervise the student&#x27;s own scoring trajectories. A reliability-weighted on-policy self-distillation objective adjusts supervision at score tokens according to agreement between the teacher&#x27;s expected scores and reference labels, while retaining candidate probability weights in a truncated token support. The deployed student directly predicts four score distributions without checklist inputs or explicit reasoning and aggregates their expectations into a scalar reward. On Qwen3.5-9B, CheckDistill achieves aggregate accuracies of 72.30%, 56.67% and 82.90% on MMRB2, MER-Bench and EditReward-Bench, respectively, exceeding the compared open-source baselines on all three metrics.</div></details>
+    </section>
+
+    <section id="method" class="method-section section-space">
+      <div class="section-shell">
+        <div class="section-heading split-heading"><div><span class="eyebrow">02 / METHOD</span><h2>Richer supervision.<br><em>A simpler deployment.</em></h2></div><p>CheckDistill combines dynamic checklist construction with reliability-aware on-policy self-distillation.</p></div>
+        <ol class="method-steps">
+          <li><span class="step-number">01</span><h3>Build the evidence</h3><p>Generate atomic checks from the source image and instruction. Pair four-dimensional scores with structured judgments and filter against human preferences.</p><span class="step-meta">CheckDistill-40K</span></li>
+          <li><span class="step-number">02</span><h3>Distill the judgment</h3><p>Initialize with mixed SFT, then align the student’s scoring distributions with evidence-conditioned teacher predictions. Weight supervision by teacher–label agreement.</p><span class="step-meta">CR-OPSD</span></li>
+          <li><span class="step-number">03</span><h3>Reward better edits</h3><p>Aggregate four expected scores into a scalar reward. Use the direct-scoring student to guide DiffusionNFT post-training of Qwen-Image-Edit.</p><span class="step-meta">Efficient online RL</span></li>
+        </ol>
+        <figure class="paper-figure"><button class="figure-button" data-lightbox="assets/pipeline.webp" data-caption="Figure 3. CheckDistill data construction, two-stage reward training, and downstream image editing alignment." aria-label="Enlarge CheckDistill pipeline"><img src="assets/pipeline.webp" alt="CheckDistill pipeline showing reward data construction, supervised initialization, checklist-guided reliability-aware OPSD, and image editing reward feedback." width="2400" height="1070" loading="lazy"><span class="expand-label">View full figure ↗</span></button><figcaption><span>THE PIPELINE</span>Instance-specific evidence is used during training; inference requires only standard editing inputs.</figcaption></figure>
+        <div class="dimensions"><div class="dimension-intro"><span class="eyebrow">FOUR COMPLEMENTARY SCORES</span><p>One edit. Four questions.</p></div><dl><div><dt><span>IF</span> Instruction Following</dt><dd>Were the requested edits made?</dd></div><div><dt><span>AP</span> Attribute Preservation</dt><dd>Were unspecified attributes preserved?</dd></div><div><dt><span>CP</span> Context Preservation</dt><dd>Did non-edited content remain unchanged?</dd></div><div><dt><span>PQ</span> Perceptual Quality</dt><dd>Does the result look natural and coherent?</dd></div></dl></div>
+      </div>
+    </section>
+
+    <section id="results" class="section-shell section-space">
+      <div class="section-heading split-heading"><div><span class="eyebrow">03 / RESULTS</span><h2>Better reward judgments.<br><em>Across three benchmarks.</em></h2></div><p>The 9B model exceeds the compared open-source baselines on all three aggregate metrics. The 4B variant reaches 72.60% on MMRB2.</p></div>
+      <div class="benchmark-panel">
+        <div class="benchmark-toolbar"><div class="segmented" role="tablist" aria-label="Reward benchmark"><button type="button" role="tab" aria-selected="true" aria-controls="benchmark-chart" id="tab-mmrb" data-benchmark="0">MMRB2</button><button type="button" role="tab" aria-selected="false" aria-controls="benchmark-chart" id="tab-mer" tabindex="-1" data-benchmark="1">MER-Bench</button><button type="button" role="tab" aria-selected="false" aria-controls="benchmark-chart" id="tab-edit" tabindex="-1" data-benchmark="2">EditReward-Bench</button></div><span class="chart-unit">Accuracy (%) ↑</span></div>
+        <div id="benchmark-chart" class="benchmark-chart" role="tabpanel" aria-labelledby="tab-mmrb" tabindex="0"></div>
+        <div class="chart-footnote"><span><i></i> CheckDistill (Qwen3.5-9B)</span><p>Aggregate metrics from Table 1 of the technical report. Bar length uses a 0–100% scale.</p></div>
+      </div>
+      <details class="results-details"><summary>See all reported model variants <span aria-hidden="true">+</span></summary><div class="table-scroll" role="region" aria-label="All aggregate reward benchmark results" tabindex="0"><table><caption>Reward benchmark aggregate accuracy (%, higher is better)</caption><thead><tr><th scope="col">Model</th><th scope="col">MMRB2</th><th scope="col">MER-Bench</th><th scope="col">EditReward-Bench</th></tr></thead><tbody id="all-results"></tbody></table></div><p class="table-note">EditReward, EditScore-8B, and SpatialReward comparisons are reported in the paper using results reproduced from SpatialReward. See the technical report for protocols and submetrics.</p></details>
+      <div class="scaling-grid"><div class="scaling-copy"><span class="eyebrow">QUALITY × DECODING COST</span><h3>Keep the knowledge.<br><em>Compress the reasoning.</em></h3><p>CheckDistill achieves 72.30% MMRB2 accuracy with about 10 output tokens. The SFT configuration that generates a checklist and judgments reaches 67.70% with approximately 700 output tokens.</p><div class="token-comparison"><span><strong>~1/70</strong> of the output tokens</span><span><strong>+4.60</strong> percentage points</span></div><p class="fine-print">Compared with the SFT reasoning configuration on Qwen3.5-9B. Output-token reduction is not a measured wall-clock speedup.</p></div><figure class="paper-figure scaling-figure"><button class="figure-button" data-lightbox="assets/scaling.webp" data-caption="Figure 5. Input, output, and hybrid scaling on MMRB2 using Qwen3.5-9B." aria-label="Enlarge accuracy versus output tokens plot"><img src="assets/scaling.webp" alt="MMRB2 accuracy versus reported scaling tokens. CheckDistill reaches 72.30 percent at about ten output tokens." width="2400" height="1910" loading="lazy"></button><figcaption>Accuracy versus reported output tokens.</figcaption></figure></div>
+    </section>
+
+    <section id="examples" class="examples-section section-space"><div class="section-shell">
+      <div class="section-heading split-heading"><div><span class="eyebrow">04 / IN ACTION</span><h2>A better reward.<br><em>A more faithful edit.</em></h2></div><p>Qualitative results for Qwen-Image-Edit [2509], before and after CheckDistill-guided reward training.</p></div>
+      <div class="example-tabs" role="tablist" aria-label="Image editing example"><button role="tab" type="button" id="example-tab-0" aria-controls="example-panel" aria-selected="true" data-example="0">01 · Style</button><button role="tab" type="button" id="example-tab-1" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="1">02 · Replace</button><button role="tab" type="button" id="example-tab-2" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="2">03 · Add</button><button role="tab" type="button" id="example-tab-3" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="3">04 · Extract</button><button role="tab" type="button" id="example-tab-4" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="4">05 · Clean up</button></div>
+      <div id="example-panel" class="example-panel" role="tabpanel" aria-labelledby="example-tab-0"><p class="edit-instruction"><span>EDITING INSTRUCTION</span><span id="example-prompt">Convert the person in the photo to a 3D cartoon style, preserving facial features and the background environment.</span></p><div class="comparison-layout"><figure class="source-image"><img id="example-source" src="assets/example-1-source.webp" alt="Source image of a group of people posing together." width="800" height="533" loading="lazy"><figcaption>Source image</figcaption></figure><div><div class="comparison" style="--split:50%"><img id="example-baseline" class="compare-image" src="assets/example-1-baseline.webp" alt="Baseline edit from Qwen-Image-Edit." width="800" height="533" loading="lazy"><div class="comparison-overlay"><img id="example-result" class="compare-image" src="assets/example-1-checkdistill.webp" alt="Edit after CheckDistill-guided reward training." width="800" height="533" loading="lazy"></div><span class="compare-badge ours-badge">+ CheckDistill</span><span class="compare-badge baseline-badge">Baseline</span><div class="comparison-divider" aria-hidden="true"><span>↔</span></div><input id="comparison-range" type="range" min="0" max="100" value="50" aria-label="Reveal CheckDistill result" aria-valuetext="50 percent CheckDistill result"></div><div class="compare-help"><span>← CheckDistill-guided RL</span><span>Drag to compare · Baseline →</span></div></div></div><p class="example-note">Original examples from Figure 4. This is a comparison of reported results, not a live image-editing demo.</p></div>
+      <div class="downstream-results"><div><span class="eyebrow">DOWNSTREAM EDITING PERFORMANCE</span><p>Qwen-Image-Edit → + DiffusionNFT with CheckDistill-9B</p></div><dl><div><dt>ImgEdit-Bench</dt><dd>4.29 <span>→</span> <strong>4.46</strong></dd></div><div><dt>REDEdit-Bench</dt><dd>4.10 <span>→</span> <strong>4.26</strong></dd></div><div><dt>GEdit-EN</dt><dd>8.18 <span>→</span> <strong>8.28</strong></dd></div></dl></div>
+      <details class="additional-examples"><summary>Explore more qualitative comparisons <span aria-hidden="true">+</span></summary><div class="additional-grid"><button class="figure-button" data-lightbox="assets/showcase-more.webp" data-caption="Additional qualitative comparisons from Figure 10 of the technical report." aria-label="Enlarge additional qualitative comparison set one"><img src="assets/showcase-more.webp" alt="Additional source, baseline, and CheckDistill-trained image editing comparisons." width="2400" height="2314" loading="lazy"><span class="expand-label">View full figure ↗</span></button><button class="figure-button" data-lightbox="assets/showcase-extra.webp" data-caption="Additional qualitative comparisons from Figure 11 of the technical report." aria-label="Enlarge additional qualitative comparison set two"><img src="assets/showcase-extra.webp" alt="Further image editing examples from the appendix, including object removal, recoloring, and background replacement." width="2103" height="2400" loading="lazy"><span class="expand-label">View full figure ↗</span></button></div></details>
+    </div></section>
+
+    <section class="section-shell section-space evidence-section"><div class="section-heading split-heading"><div><span class="eyebrow">05 / VERIFICATION EVIDENCE</span><h2>The details<br><em>make the difference.</em></h2></div><p>Concrete checks expose missed edits and unintended changes. All candidates for the same editing condition share a checklist; perceptual quality is assessed separately.</p></div><figure class="paper-figure"><button class="figure-button" data-lightbox="assets/checklist-example.webp" data-caption="Figure 2. An example of checklist generation and checklist-based evaluation for image editing." aria-label="Enlarge checklist generation example"><img src="assets/checklist-example.webp" alt="A social-media editing example with atomic instruction-following, attribute-preservation, and context-preservation checks, including verification of a like count and comment removal." width="2400" height="1308" loading="lazy"><span class="expand-label">View full figure ↗</span></button><figcaption><span>CHECKLIST-GUIDED EVALUATION</span>Atomic requirements ground each judgment in an observable editing or preservation constraint.</figcaption></figure></section>
+
+    <section id="citation" class="citation-section"><div class="section-shell citation-layout"><div><span class="eyebrow">06 / RESOURCES</span><h2>Build on<br><em>CheckDistill.</em></h2><p>Read the full technical report for the training objectives, evaluation protocols, ablations, and prompt templates.</p><a class="resource-link" href="assets/CheckDistill-Technical-Report.pdf" target="_blank" rel="noopener">Technical report <span>PDF · 29 pages ↗</span></a><div class="resource-link unavailable">Code <span>Coming soon</span></div></div><div class="citation-box"><div class="citation-toolbar"><span>BibTeX</span><button id="copy-citation" type="button">Copy citation <span aria-hidden="true">⧉</span></button></div><pre><code id="bibtex">@techreport{cai2026checkdistill,
+  title = {CheckDistill: Adaptive Checklist
+    Distillation for Efficient Distributional
+    Reward Modeling in Image Editing},
+  author = {Cai, Yaqi and Gao, Zuan and
+    Chen, Mengting and Li, Wei and Zheng, Bo},
+  institution = {Alibaba Group},
+  year = {2026}
+}</code></pre><p id="copy-status" role="status" aria-live="polite"></p></div></div></section>
+  </main>
+  <footer class="section-shell site-footer"><div class="footer-report-brand"><img src="assets/checkdistill-logo.png" alt="CheckDistill Technical Report" width="220" height="73"><p>Adaptive verification. Distilled reward.</p></div><img src="assets/alibaba-logo.png" alt="Alibaba" width="145" height="19"><a class="back-top" href="#">Back to top ↑</a></footer>
+  <dialog id="figure-dialog" aria-label="Expanded paper figure"><div class="dialog-toolbar"><p id="figure-caption"></p><button type="button" id="close-figure" aria-label="Close expanded figure">Close <span aria-hidden="true">×</span></button></div><div class="dialog-image-scroll"><img id="expanded-figure" alt=""></div></dialog>
+</body>
+</html>

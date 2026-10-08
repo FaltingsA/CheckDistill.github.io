@@ -29,13 +29,13 @@
 window.CHECKDISTILL_CONFIG = Object.freeze({
   projectUrl: '',
   codeUrl: '',
-  paperUrl: 'assets/CheckDistill-Technical-Report.pdf'
+  paperUrl: ''
 });
 ```
 
 - `projectUrl`：标准 `github.io` 页面会自动检测网址，并添加到 BibTeX 引用。使用自定义域名时，请在此填入完整网址，建议以 `/` 结尾。
 - `codeUrl`：填写真正的研究代码仓库地址后，首页及页尾的 Code 链接会自动启用。留空时显示 Coming soon。网页仓库与研究代码仓库可以是不同仓库。
-- `paperUrl`：默认打开随包附带的 29 页论文 PDF；之后可改为论文网页或新版 PDF 地址。
+- `paperUrl`：论文发表后填入 arXiv 摘要页地址（`https://arxiv.org/abs/...`）；留空时全部论文入口显示 Coming soon。项目包不包含、也不上传论文 PDF。
 
 如需社交平台链接预览，确定正式网址后，在 `index.html` 的 `<head>` 内添加指向正式页面的 `og:url` 和指向 `assets/qualitative.webp` 的完整 `og:image` URL。
 
@@ -57,7 +57,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 | `style.css` | 柔和橘色主题、桌面与手机布局 |
 | `app.js` | 基准切换、案例对比、图表放大与引用复制 |
 | `site-config.js` | 项目页、研究代码和论文链接 |
-| `assets/` | 论文 PDF、原 Logo、图表与案例图像 |
+| `assets/` | 原 Logo、图表与案例图像（不含论文 PDF） |
 | `.nojekyll` | 让 GitHub Pages 直接发布静态文件 |
 
 ## 5. 内容与素材来源

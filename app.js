@@ -18,9 +18,14 @@ if (projectUrl && validWebUrl(projectUrl)) {
   const bibtex = document.getElementById('bibtex');
   bibtex.textContent = bibtex.textContent.replace(/\n\}$/, ',\n  url = {' + projectUrl + '}\n}');
 }
-if (siteConfig.paperUrl) {
-  document.querySelectorAll('a[href="assets/CheckDistill-Technical-Report.pdf"]').forEach(link => {
+if (siteConfig.paperUrl && validWebUrl(siteConfig.paperUrl)) {
+  document.querySelectorAll('[data-paper-link]').forEach(link => {
     link.href = siteConfig.paperUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.removeAttribute('aria-disabled');
+    link.classList.remove('paper-unavailable', 'unavailable');
+    link.querySelector('[data-paper-status]').textContent = 'arXiv ↗';
   });
 }
 if (siteConfig.codeUrl && validWebUrl(siteConfig.codeUrl)) {
@@ -32,7 +37,7 @@ if (siteConfig.codeUrl && validWebUrl(siteConfig.codeUrl)) {
   link.rel = 'noopener';
   link.append(oldButton.querySelector('img').cloneNode(true), document.createTextNode('Code ↗'));
   oldButton.replaceWith(link);
-  const resource = document.querySelector('.resource-link.unavailable');
+  const resource = document.querySelector('[data-code-resource]');
   const resourceLink = document.createElement('a');
   resourceLink.className = 'resource-link';
   resourceLink.href = siteConfig.codeUrl;

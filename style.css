@@ -16,3 +16,7 @@
 .footer-report-brand img{width:220px;height:auto;mix-blend-mode:multiply}.footer-report-brand p{margin-top:-5px;padding-left:19px}@media(max-width:700px){.footer-report-brand img{width:185px}.footer-report-brand p{font-size:8px;padding-left:16px}}
 
 .paper-unavailable{cursor:default}.nav-paper small{font-size:10px;font-weight:400;color:var(--muted)}.button-dark.paper-unavailable:hover{background:var(--ink);transform:none}.button-dark .soon-label{color:#ddd;border-color:#fff4}.resource-link.paper-unavailable:hover{color:#a2a69a}
+
+/* Author roles mirror the report author block. */
+.author-roles{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;margin:10px auto 0;font-size:16px;color:var(--ink)}.author-roles sup{color:var(--accent-dark)}.author-notes a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:700px){.author-roles{font-size:14px;gap:5px 14px;max-width:370px}}

@@ -5,5 +5,5 @@
 window.CHECKDISTILL_CONFIG = Object.freeze({
   projectUrl: 'https://faltingsa.github.io/CheckDistill.github.io/',
   codeUrl: '',
-  paperUrl: ''
+  paperUrl: 'https://arxiv.org/abs/2610.26740'
 });

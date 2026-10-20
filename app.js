@@ -15,8 +15,6 @@ if (projectUrl && validWebUrl(projectUrl)) {
   canonical.rel = 'canonical';
   canonical.href = projectUrl;
   document.head.append(canonical);
-  const bibtex = document.getElementById('bibtex');
-  bibtex.textContent = bibtex.textContent.replace(/\n\}$/, ',\n  url = {' + projectUrl + '}\n}');
 }
 if (siteConfig.paperUrl && validWebUrl(siteConfig.paperUrl)) {
   document.querySelectorAll('[data-paper-link]').forEach(link => {
@@ -50,7 +48,7 @@ if (siteConfig.codeUrl && validWebUrl(siteConfig.codeUrl)) {
   resource.replaceWith(resourceLink);
 }
 
-// Aggregate values transcribed from Table 1 of the supplied technical report.
+// Aggregate values transcribed from Table 1 of the paper.
 const results = [
   {name:'GPT-4.1', scores:[56.60,46.83,73.40]},
   {name:'Gemini-3.1-Pro', scores:[64.29,54.50,79.80]},
